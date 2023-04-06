@@ -1,64 +1,91 @@
-name: 'SWM GitHub Actions Basic' # 없어도됨, 하지만 없으면 찾기 힘듦, 외부에서 이 github action API 호출할 때도 사용
+# name: 'SWM GitHub Actions Basic' # 없어도됨, 하지만 없으면 찾기 힘듦, 외부에서 이 github action API 호출할 때도 사용
 
-on: push # 필수 # trigger : push 했을 때 실행시켜라
-#on : ['push', 'pull_request'] # 배열로 만들면 trigger 추가 실행 가능
+# on: push # 필수 # trigger : push 했을 때 실행시켜라
+# #on : ['push', 'pull_request'] # 배열로 만들면 trigger 추가 실행 가능
 
-env:
-  GLOBAL_LEVEL: "This value comes from the GLOBAL level" # 환경변수 구성 # 위치마다 scope가 다르다 ex)local, global 변수같은것
-  # global 레벨은 어디서든 접근 가능
+# env:
+#   GLOBAL_LEVEL: "This value comes from the GLOBAL level" # 환경변수 구성 # 위치마다 scope가 다르다 ex)local, global 변수같은것
+#   # global 레벨은 어디서든 접근 가능
 
-jobs: # 필수 # 이 workflow로 하겠다
-  first-job: # second-job 등 원하는 만큼 추가 가능 # job마다 격리된 빌드 서버가 돌아감 # 각 서버끼리 전달이 안 됨
-    name: 'First Job' # job 마다 이름
+# jobs: # 필수 # 이 workflow로 하겠다
+#   first-job: # second-job 등 원하는 만큼 추가 가능 # job마다 격리된 빌드 서버가 돌아감 # 각 서버끼리 전달이 안 됨
+#     name: 'First Job' # job 마다 이름
 
-    runs-on: ubuntu-latest # windows or ubuntu or mac
+#     runs-on: ubuntu-latest # windows or ubuntu or mac
 
-    env:
-      JOB_LEVEL_1: "This value comes from the JOB level1" # JOB 레벨에서만 접근 가능한 변수
-    steps: # 배열 요소 하나하나가 task=action # 하다 실패하면 뒤에꺼는 실행 안 됨(default)(실패해도 계속 실행하게 할 수도 있음)
-    - name: Say Hello World 1 
-      shell: bash # shell은 편한거 써도 됨
+#     env:
+#       JOB_LEVEL_1: "This value comes from the JOB level1" # JOB 레벨에서만 접근 가능한 변수
+#     steps: # 배열 요소 하나하나가 task=action # 하다 실패하면 뒤에꺼는 실행 안 됨(default)(실패해도 계속 실행하게 할 수도 있음)
+#     - name: Say Hello World 1 
+#       shell: bash # shell은 편한거 써도 됨
 
-      env:
-        STEP_LEVEL_1: "This value comes from the STEP level1"
-      run: |
-        echo "Hello World from step 1" # 이건 하드코딩 # 보통은 변수들을 끌어와서 작업 
-        echo "GLOBAL : Hello World from ${{env.GLOBAL_LEVEL}}"
-        echo "JOB 1 : Hello World from ${{env.JOB_LEVEL_1}}"
-        echo "JOB 2 : Hello World from ${{env.JOB_LEVEL_2}}"
-        echo "STEP 1 : Hello World from ${{env.STEP_LEVEL_1}}"
-        echo "STEP 2 : Hello World from ${{env.STEP_LEVEL_2}}"
+#       env:
+#         STEP_LEVEL_1: "This value comes from the STEP level1"
+#       run: |
+#         echo "Hello World from step 1" # 이건 하드코딩 # 보통은 변수들을 끌어와서 작업 
+#         echo "GLOBAL : Hello World from ${{env.GLOBAL_LEVEL}}"
+#         echo "JOB 1 : Hello World from ${{env.JOB_LEVEL_1}}"
+#         echo "JOB 2 : Hello World from ${{env.JOB_LEVEL_2}}"
+#         echo "STEP 1 : Hello World from ${{env.STEP_LEVEL_1}}"
+#         echo "STEP 2 : Hello World from ${{env.STEP_LEVEL_2}}"
 
-    - name: Say Hello World 2
-      shell: pwsh
-      env:
-        STEP_LEVEL_2: "This value comes from the STEP level2"
-      run: |
-        echo "Hello World from step 2"
-        echo "GLOBAL : Hello World from ${{env.GLOBAL_LEVEL}}"
-        echo "JOB 1 : Hello World from ${{env.JOB_LEVEL_1}}"
-        echo "JOB 2 : Hello World from ${{env.JOB_LEVEL_2}}"
-        echo "STEP 1 : Hello World from ${{env.STEP_LEVEL_1}}"
-        echo "STEP 2 : Hello World from ${{env.STEP_LEVEL_2}}"
+#     - name: Say Hello World 2
+#       shell: pwsh
+#       env:
+#         STEP_LEVEL_2: "This value comes from the STEP level2"
+#       run: |
+#         echo "Hello World from step 2"
+#         echo "GLOBAL : Hello World from ${{env.GLOBAL_LEVEL}}"
+#         echo "JOB 1 : Hello World from ${{env.JOB_LEVEL_1}}"
+#         echo "JOB 2 : Hello World from ${{env.JOB_LEVEL_2}}"
+#         echo "STEP 1 : Hello World from ${{env.STEP_LEVEL_1}}"
+#         echo "STEP 2 : Hello World from ${{env.STEP_LEVEL_2}}"
 
-    - name: Set environment variable
+#     - name: Set environment variable
+#       shell: bash
+
+#       run: |
+#         swmValue=$(echo "hello SWM") #작업 결과를 저장한다고 치자
+
+#         echo "SWM_VALUE=$swmValue" >> $GITHUB_ENV # job레벨에서 사용할 수 있게끔 저장
+#         # 임시 환경변수>> 맨 마지막에 추가
+#     - name: Get environment variable from bash
+#       shell: bash
+#       run: | #환경변수 값 참조하는 3가지 방법
+#         echo "SWM_VALUE 1 : ${{env.SWM_VALUE}}" # github action 문법
+#         echo "SWM_VALUE 2 : $SWM_VALUE" # bash shell 문법
+#         echo "SWM_VALUE 3 : $env:SWM_VALUE" #power shell 문법
+
+#     - name: Get environment variable from pwsh
+#       shell: pwsh
+#       run: |
+#         echo "SWM_VALUE 1 : ${{env.SWM_VALUE}}"
+#         echo "SWM_VALUE 2 : $SWM_VALUE"
+#         echo "SWM_VALUE 3 : $env:SWM_VALUE"
+#################################
+name: 'SWM GitHub Actions Basic'
+
+on: push
+
+jobs:
+  first-job:
+    name: 'First Job'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set output value
+      id: first
       shell: bash
-
       run: |
-        swmValue=$(echo "hello SWM") #작업 결과를 저장한다고 치자
+        swm_value1="This is the value for the first output"
+        swm_value2="This is the value for the second output"
 
-        echo "SWM_VALUE=$swmValue" >> $GITHUB_ENV # job레벨에서 사용할 수 있게끔 저장
-        # 임시 환경변수>> 맨 마지막에 추가
-    - name: Get environment variable from bash
-      shell: bash
-      run: | #환경변수 값 참조하는 3가지 방법
-        echo "SWM_VALUE 1 : ${{env.SWM_VALUE}}" # github action 문법
-        echo "SWM_VALUE 2 : $SWM_VALUE" # bash shell 문법
-        echo "SWM_VALUE 3 : $env:SWM_VALUE" #power shell 문법
+        echo "::set-output name=swm1::$swm_value1"
+        echo "::set-output name=swm2::$swm_value2"
 
-    - name: Get environment variable from pwsh
+    - name : Get output value
       shell: pwsh
       run: |
-        echo "SWM_VALUE 1 : ${{env.SWM_VALUE}}"
-        echo "SWM_VALUE 2 : $SWM_VALUE"
-        echo "SWM_VALUE 3 : $env:SWM_VALUE"
+        echo "Output value 1 is : ${{steps.first.outputs.swm1}}" # first : step 의 id
+        echo "Output value 2 is : ${{steps.first.outputs.swm2}}
