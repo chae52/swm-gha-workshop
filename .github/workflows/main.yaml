@@ -1,31 +1,95 @@
 name: 'SWM GitHub Actions Basic'
 
+# on: ['push', 'pull_request'] # 여러 경우 가능
+
+# on:
+#   push:
+#     branches:
+#      - 'main' #main 브랜치에 푸시할 때만 실행 # 트리거 조건 세분화
+#     paths:
+#     - 'src/**' # src밑의 파일들이 변경될 때만! readme 같은 건 수정되어도 필요없기 때문에
+
 on: push
 
 jobs:
+  # first-job:
+  #   name: 'First Job'
+
+  #   strategy:
+  #     matrix:
+  #       os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest' ] # 어느 환경에서든 다 빌드를 돌려야 함 # 똑같은 빌드에 os만 달라짐
+  #       #똑같은 내용을 os마다만 다르게 만들면 코드 재사용성이 떨어짐
+  #       # os 변수로 배열을 만들어줌
+
+  #       nodejs: ['16.x', '18.x'] # nodejs패키지를 만들 때 두 버전에서 모두 잘 돌아가게 하기 위해서
+
+  #   runs-on: ${{ matrix.os }} #이 매트릭스 참조
+  #   # 3개의 os로 동시에 3개 빌드가 돌아감
+  #   steps:
+  #   - name: Say Hello World on ${{ matrix.os }}
+  #     shell: bash
+  #     run: |
+  #       echo "Hello World on ${{ matrix.os }} with ${{ matrix.nodejs }}"
+
+  #   - name: Say Hello World on ${{ matrix.os }}
+  #     if: matrix.os =='ubuntu-latest' # condition 추가 # matrix가 window일 때같은 경우 추가
+  #     # 위의 step이 실패하더라도  무시하고 밑의 step을 실행하고 싶으면 if로 실행할 수 있음
+
+  #     shell: bash
+  #     run: |
+  #       echo "Hello World on ${{ matrix.os }} with ${{ matrix.nodejs }}"
+
+
+  # second-job:
+  #   name: 'Second Job'
+  #   if: github.event =='pull_request' # pull request일 때만 실행
+
+  #   strategy:
+  #     matrix:
+  #       os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest' ] # 어느 환경에서든 다 빌드를 돌려야 함 # 똑같은 빌드에 os만 달라짐
+  #       #똑같은 내용을 os마다만 다르게 만들면 코드 재사용성이 떨어짐
+  #       # os 변수로 배열을 만들어줌
+
+  #       nodejs: ['16.x', '18.x'] # nodejs패키지를 만들 때 두 버전에서 모두 잘 돌아가게 하기 위해서
+
+  #   runs-on: ${{ matrix.os }} #이 매트릭스 참조
+  #   # 3개의 os로 동시에 3개 빌드가 돌아감
+  #   steps:
+  #   - name: Say Hello World on ${{ matrix.os }}
+  #     shell: bash
+  #     run: |
+  #       echo "Hello World on ${{ matrix.os }} with ${{ matrix.nodejs }}"
+
+  #   - name: Say Hello World on ${{ matrix.os }}
+  #     if: matrix.os =='ubuntu-latest' # condition 추가 # matrix가 window일 때같은 경우 추가
+  #     # 위의 step이 실패하더라도  무시하고 밑의 step을 실행하고 싶으면 if로 실행할 수 있음
+
+  #     shell: bash
+  #     run: |
+  #       echo "Hello World on ${{ matrix.os }} with ${{ matrix.nodejs }}"
+
   first-job:
-    name: 'First Job'
+    name: 'first Job'
 
-    strategy:
-      matrix:
-        os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest' ] # 어느 환경에서든 다 빌드를 돌려야 함 # 똑같은 빌드에 os만 달라짐
-        #똑같은 내용을 os마다만 다르게 만들면 코드 재사용성이 떨어짐
-        # os 변수로 배열을 만들어줌
+    runs-on: ubuntu-latest
 
-        nodejs: ['16.x', '18.x'] # nodejs패키지를 만들 때 두 버전에서 모두 잘 돌아가게 하기 위해서
-
-    runs-on: ${{ matrix.os }} #이 매트릭스 참조
-    # 3개의 os로 동시에 3개 빌드가 돌아감
     steps:
-    - name: Say Hello World on ${{ matrix.os }}
+    - name: Say Hello World 
       shell: bash
       run: |
-        echo "Hello World on ${{ matrix.os }} with ${{ matrix.nodejs }}"
+        echo "Hello World"
 
-    - name: Say Hello World on ${{ matrix.os }}
-      if: matrix.os =='ubuntu-latest' # condition 추가 # matrix가 window일 때같은 경우 추가
-      # 위의 step이 실패하더라도  무시하고 밑의 step을 실행하고 싶으면 if로 실행할 수 있음
+  second-job:
+    name: 'second Job'
 
+    needs:
+    - 'first-job' #first job이 끝나야만 second job이 실행됨
+
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Say Hello World 
       shell: bash
       run: |
-        echo "Hello World on ${{ matrix.os }} with ${{ matrix.nodejs }}"
+        echo "Hello World"
