@@ -34,5 +34,5 @@ jobs:
       uses: ./.github/actions
       with:
         webexToken: ${{secrets.WEBEX_TOKEN}}
-        webexRoomId:${{secrets.WEBEX_ROOM_ID}}
-        bodyText:"커스텀 액션을 사용한 깃헙액션을 통한cw ${{ github.repository }}"
+        webexRoomId: ${{secrets.WEBEX_ROOM_ID}}
+        bodyText: "커스텀 액션을 사용한 깃헙액션을 통한cw ${{ github.repository }}"
