@@ -23,9 +23,9 @@ jobs:
         echo "Hello World on ${{ matrix.os }} with ${{ matrix.nodejs }}"
 
     - name: Say Hello World on ${{ matrix.os }}
-      if: matrix.os =='ubuntu_latest' # condition 추가 # matrix가 window일 때같은 경우 추가
+      if: matrix.os =='ubuntu-latest' # condition 추가 # matrix가 window일 때같은 경우 추가
       # 위의 step이 실패하더라도  무시하고 밑의 step을 실행하고 싶으면 if로 실행할 수 있음
-      
+
       shell: bash
       run: |
         echo "Hello World on ${{ matrix.os }} with ${{ matrix.nodejs }}"
