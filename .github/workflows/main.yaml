@@ -28,7 +28,7 @@ jobs:
         MARKDOWN_MESSAGE: "** 마켓플레이스에서 검색한 액션으로 보내는 깃헙액션 워크샵 - cw from ${{ github.repository }}. **"
 
     - name: Send message to webex
-      uses:.//github?actions
+      uses: ./.github/actions
       with:
         webexToken: ${{secrets.WEBEX_TOKEN}}
         webexRoomId:${{secrets.WEBEX_ROOM_ID}}
