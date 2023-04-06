@@ -95,3 +95,11 @@ jobs:
       run: |
         echo "Output value 1 is : ${{steps.first.outputs.swm1}}" # first : step 의 id
         echo "Output value 2 is : ${{steps.first.outputs.swm2}}"
+
+    - name : Get secret value
+      shell: bash
+      run: |
+        echo "MY_secret is: ${{secrets.MY_SECRETS}}"
+
+
+        
