@@ -1,0 +1,21 @@
+name: 'SWM GitHub Actions Basic'
+
+on: push
+
+jobs:
+  first-job:
+    name: 'First Job'
+
+    strategy:
+      matrix:
+        os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest' ] # 어느 환경에서든 다 빌드를 돌려야 함 # 똑같은 빌드에 os만 달라짐
+        #똑같은 느용을 os마다만 다르게 만들면 코드 재사용성이 떨어짐
+        # os 변수로 배열을 만들어줌
+
+    runs-on: ${{ matrix.os }} #이 매트릭스 참조
+    # 3개의 os로 동시에 3개 빌드가 돌아감
+    steps:
+    - name: Say Hello World on ${{ matrix.os }}
+      shell: bash
+      run: |
+        echo "Hello World on ${{ matrix.os }}"
