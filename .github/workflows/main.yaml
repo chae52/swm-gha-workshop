@@ -84,8 +84,8 @@ jobs:
         echo "::set-output name=swm1::$swm_value1"
         echo "::set-output name=swm2::$swm_value2"
 
-        # echo "::add-mask::$swm_value1" # 민감한 정보는 꼭 마스킹 해야함
-        # echo "::add-mask::$swm_value2"
+        echo "::add-mask::$swm_value1" # 민감한 정보는 꼭 마스킹 해야함
+        echo "::add-mask::$swm_value2"
 
         echo "swm1=$swm_value1" >> $GITHUB_OUTPUT
         echo "swm2=$swm_value2" >> $GITHUB_OUTPUT
