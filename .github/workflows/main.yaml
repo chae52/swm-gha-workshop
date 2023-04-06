@@ -42,7 +42,7 @@ jobs: # 필수 # 이 workflow로 하겠다
         echo "STEP 2 : Hello World from ${{env.STEP_LEVEL_2}}"
 
   second-job: # second-job 등 원하는 만큼 추가 가능 # job마다 격리된 빌드 서버가 돌아감 # 각 서버끼리 전달이 안 됨
-    name: 'First Job' # job 마다 이름
+    name: 'Second Job' # job 마다 이름
 
     runs-on: ubuntu-latest # windows or ubuntu or mac
 
