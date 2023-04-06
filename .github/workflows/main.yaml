@@ -14,7 +14,7 @@ jobs: # 필수 # 이 workflow로 하겠다
     runs-on: ubuntu-latest # windows or ubuntu or mac
 
     env:
-      JOB_LEVEL: "This value comes from the JOB level1" # JOB 레벨에서만 접근 가능한 변수
+      JOB_LEVEL_1: "This value comes from the JOB level1" # JOB 레벨에서만 접근 가능한 변수
     steps: # 배열 요소 하나하나가 task=action # 하다 실패하면 뒤에꺼는 실행 안 됨(default)(실패해도 계속 실행하게 할 수도 있음)
     - name: Say Hello World 1 
       shell: bash # shell은 편한거 써도 됨
@@ -47,7 +47,7 @@ jobs: # 필수 # 이 workflow로 하겠다
     runs-on: ubuntu-latest # windows or ubuntu or mac
 
     env:
-      JOB_LEVEL: "This value comes from the JOB level2"
+      JOB_LEVEL_2: "This value comes from the JOB level2"
     steps: # 배열 요소 하나하나가 task=action # 하다 실패하면 뒤에꺼는 실행 안 됨(default)(실패해도 계속 실행하게 할 수도 있음)
     - name: Say Hello World 1 
       shell: bash # shell은 편한거 써도 됨
