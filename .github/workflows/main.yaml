@@ -84,8 +84,11 @@ jobs:
         echo "::set-output name=swm1::$swm_value1"
         echo "::set-output name=swm2::$swm_value2"
 
+        echo "swm1=$swm_value1" >> &GITHUB_OUTPUT
+        echo "swm2=$swm_value2" >> &GITHUB_OUTPUT
+
     - name : Get output value
       shell: pwsh
       run: |
         echo "Output value 1 is : ${{steps.first.outputs.swm1}}" # first : step 의 id
-        echo "Output value 2 is : ${{steps.first.outputs.swm2}}
+        echo "Output value 2 is : ${{steps.first.outputs.swm2}}"
