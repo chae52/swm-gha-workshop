@@ -74,27 +74,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set output value
-      id: first
-      shell: bash
-      run: |
-        swm_value1="This is the value for the first output"
-        swm_value2="This is the value for the second output"
+    # - name: Set output value
+    #   id: first
+    #   shell: bash
+    #   run: |
+    #     swm_value1="This is the value for the first output"
+    #     swm_value2="This is the value for the second output"
 
-        echo "::set-output name=swm1::$swm_value1"
-        echo "::set-output name=swm2::$swm_value2"
+    #     echo "::set-output name=swm1::$swm_value1"
+    #     echo "::set-output name=swm2::$swm_value2"
 
-        # echo "::add-mask::$swm_value1" # 민감한 정보는 꼭 마스킹 해야함
-        # echo "::add-mask::$swm_value2"
+    #     # echo "::add-mask::$swm_value1" # 민감한 정보는 꼭 마스킹 해야함
+    #     # echo "::add-mask::$swm_value2"
 
-        echo "swm1=$swm_value1" >> &GITHUB_OUTPUT
-        echo "swm2=$swm_value2" >> &GITHUB_OUTPUT
+    #     echo "swm1=$swm_value1" >> &GITHUB_OUTPUT
+    #     echo "swm2=$swm_value2" >> &GITHUB_OUTPUT
 
-    - name : Get output value
-      shell: pwsh
-      run: |
-        echo "Output value 1 is : ${{steps.first.outputs.swm1}}" # first : step 의 id
-        echo "Output value 2 is : ${{steps.first.outputs.swm2}}"
+    # - name : Get output value
+    #   shell: pwsh
+    #   run: |
+    #     echo "Output value 1 is : ${{steps.first.outputs.swm1}}" # first : step 의 id
+    #     echo "Output value 2 is : ${{steps.first.outputs.swm2}}"
 
     - name : Get secret value
       shell: bash
