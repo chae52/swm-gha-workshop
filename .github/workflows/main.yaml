@@ -19,3 +19,10 @@ jobs:
           "roomId": "${{ secrets.WEBEX_ROOM_ID }}",
           "text": "curl 명령어를 사용한 깃헙 액션 워크샵입니다 -cw ${{ github.repository }}"
         }'
+    
+    - name: Post Message to Webex Room
+        uses: chrivand/action-webex-js@main #이미 만들어진 github action을 marketplace에서 가져다 쓰겠다
+        env:
+          WEBEX_TOKEN: ${{ secrets.WEBEX_TOKEN }}
+          WEBEX_ROOM_ID: ${{ secrets.WEBEX_ROOM_ID }}
+          MARKDOWN_MESSAGE: "**마켓플레이스에서 검색한 액션으로 보내는 깃험액션 워크샵 - cw from ${{ github.repository }}.**"
