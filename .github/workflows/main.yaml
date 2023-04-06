@@ -41,35 +41,24 @@ jobs: # 필수 # 이 workflow로 하겠다
         echo "STEP 1 : Hello World from ${{env.STEP_LEVEL_1}}"
         echo "STEP 2 : Hello World from ${{env.STEP_LEVEL_2}}"
 
-  second-job: # second-job 등 원하는 만큼 추가 가능 # job마다 격리된 빌드 서버가 돌아감 # 각 서버끼리 전달이 안 됨
-    name: 'Second Job' # job 마다 이름
+    - name: Set environment variable
+      shell: bash
 
-    runs-on: ubuntu-latest # windows or ubuntu or mac
-
-    env:
-      JOB_LEVEL_2: "This value comes from the JOB level2"
-    steps: # 배열 요소 하나하나가 task=action # 하다 실패하면 뒤에꺼는 실행 안 됨(default)(실패해도 계속 실행하게 할 수도 있음)
-    - name: Say Hello World 1 
-      shell: bash # shell은 편한거 써도 됨
-
-      env:
-        STEP_LEVEL_1: "This value comes from the STEP level1"
       run: |
-        echo "Hello World from step 1" # 이건 하드코딩 # 보통은 변수들을 끌어와서 작업 
-        echo "GLOBAL : Hello World from ${{env.GLOBAL_LEVEL}}"
-        echo "JOB 1 : Hello World from ${{env.JOB_LEVEL_1}}"
-        echo "JOB 2 : Hello World from ${{env.JOB_LEVEL_2}}"
-        echo "STEP 1 : Hello World from ${{env.STEP_LEVEL_1}}"
-        echo "STEP 2 : Hello World from ${{env.STEP_LEVEL_2}}"
+        swmValue=$(echo "hello SWM") #작업 결과를 저장한다고 치자
 
-    - name: Say Hello World 2
+        echo "SWM_VALUE=$swmValue" >> $GITHUB_ENV # job레벨에서 사용할 수 있게끔 저장
+        # 임시 환경변수>> 맨 마지막에 추가
+    - name: Get environment variable from bash
+      shell: bash
+      run: | #환경변수 값 참조하는 3가지 방법
+        echo "SWM_VALUE 1 : ${{env.SWM_VALUE}}" # github action 문법
+        echo "SWM_VALUE 2 : $SWM_VALUE" # bash shell 문법
+        echo "SWM_VALUE 3 : $env:SWM_VALUE" #power shell 문법
+
+    - name: Get environment variable from pwsh
       shell: pwsh
-      env:
-        STEP_LEVEL_2: "This value comes from the STEP level2"
       run: |
-        echo "Hello World from step 2"
-        echo "GLOBAL : Hello World from ${{env.GLOBAL_LEVEL}}"
-        echo "JOB 1 : Hello World from ${{env.JOB_LEVEL_1}}"
-        echo "JOB 2 : Hello World from ${{env.JOB_LEVEL_2}}"
-        echo "STEP 1 : Hello World from ${{env.STEP_LEVEL_1}}"
-        echo "STEP 2 : Hello World from ${{env.STEP_LEVEL_2}}"
+        echo "SWM_VALUE 1 : ${{env.SWM_VALUE}}"
+        echo "SWM_VALUE 2 : $SWM_VALUE"
+        echo "SWM_VALUE 3 : $env:SWM_VALUE"
