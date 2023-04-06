@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout repository #일단 코드를 빌드서버에 다운받아야 함
+      uses: actions/checkout@v2
+
     - name: Send message to Webex space
       shell: bash
       run: |
@@ -25,7 +28,7 @@ jobs:
       env:
         WEBEX_TOKEN: ${{ secrets.WEBEX_TOKEN }}
         WEBEX_ROOM_ID: ${{ secrets.WEBEX_ROOM_ID }}
-        MARKDOWN_MESSAGE: "** 마켓플레이스에서 검색한 액션으로 보내는 깃헙액션 워크샵 - cw from ${{ github.repository }}. **"
+        MARKDOWN_MESSAGE: "**마켓플레이스에서 검색한 액션으로 보내는 깃헙액션 워크샵 - cw from ${{ github.repository }}. **"
 
     - name: Send message to webex
       uses: ./.github/actions
